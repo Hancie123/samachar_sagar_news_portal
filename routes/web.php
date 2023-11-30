@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\NewsController;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +18,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('login');
+})->name('admin.login');
+
+Route::post('login',[AuthController::class,'login']);
+
+Route::group(['middleware'=>'auth'],function(){
+    Route::get('home',[DashboardController::class,'index']);
+    Route::get('news/add',[NewsController::class,'addNews']);
+
 });
