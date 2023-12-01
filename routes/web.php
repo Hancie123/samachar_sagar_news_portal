@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\NewsCategoryController;
 use App\Http\Controllers\NewsController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,5 +27,6 @@ Route::post('login',[AuthController::class,'login']);
 Route::group(['middleware'=>'auth'],function(){
     Route::get('home',[DashboardController::class,'index']);
     Route::get('news/add',[NewsController::class,'addNews']);
+    Route::post('news/news-category',[NewsCategoryController::class,'store']);
 
 });
