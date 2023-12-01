@@ -7,8 +7,8 @@
     @include('layouts.header')
     <link rel="stylesheet" href="{{ url('assets/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ url('assets/css/select2-bootstrap4.min.css') }}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
-    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.0/dist/trix.css">
+    <script type="text/javascript" src="https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"></script>
 
 
 
@@ -59,23 +59,24 @@
                 </div><br>
 
 
-                <form>
+                <form action="{{url('news/add')}}" method="post">
+                    @csrf
                     <div class="card">
 
                         <div class="row">
                             <div class="col-md-6">
-                                <label for="email" class="form-label">Title:</label>
-                                <input type="email" class="form-control" id="email" placeholder="Enter email"
-                                    name="email">
+                                <label for="text" class="form-label">Title:</label>
+                                <input type="text" class="form-control" id="title" placeholder="Enter title"
+                                    name="title">
 
                             </div>
 
                             <div class="col-md-6">
                                 <label for="email" class="form-label">Category:</label>
                                 <select class="form-control select2 select2-danger"
-                                    data-dropdown-css-class="select2-danger" style="width: 100%;">
+                                    data-dropdown-css-class="select2-danger" style="width: 100%;" name="news_category_id">
                                     @forelse ($newsCategory as $data)
-                                        <option>{{ $data->title }}</option>
+                                        <option value="{{$data->id}}">{{ $data->title }}</option>
                                     @empty
                                         <option>No data</option>
                                     @endforelse
@@ -102,8 +103,8 @@
                         <br>
                         <div class="row">
                             <div class="col-md-12">
-                                <label for="email" class="form-label">Excerpt:</label>
-                                <textarea class="form-control" id="email" placeholder="Enter email" name="email"></textarea>
+                                <label for="excerpt" class="form-label">Excerpt:</label>
+                                <textarea class="form-control" id="excerpt" placeholder="Enter excerpt" name="excerpt"></textarea>
 
                             </div>
 
@@ -111,20 +112,52 @@
                         <br>
                         <div class="row">
                             <div class="col-md-12">
-                                <label for="email" class="form-label">Description:</label>
-                                <textarea class="form-control" id="MyID" placeholder="Enter email" name="email"></textarea>
+                                <label for="description" class="form-label">Description:</label>
+                                <input id="x" type="hidden" name="description">
+                                <trix-editor input="x"></trix-editor>
 
                             </div>
 
 
 
                         </div>
+                        <br>
 
                         <button class="btn btn-bitbucket">Publish News</button>
 
 
 
                 </form>
+
+                <!-- The Modal -->
+                <div class="modal" id="myModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Create News Category</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <form action="{{ url('news/news-category') }}" method="post">
+                                    @csrf
+                                    <label>News Category</label>
+                                    <input type="text" name="newsCategory" class="form-control" /><br>
+                                    <button type="submit" class="btn btn-bitbucket">Submit</button>
+                                </form>
+                            </div>
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
 
 
 
@@ -144,35 +177,7 @@
 
     </div><!-- ./wrapper -->
 
-    <!-- The Modal -->
-    <div class="modal" id="myModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
 
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title">Create News Category</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-
-                <!-- Modal body -->
-                <div class="modal-body">
-                    <form action="{{ url('news/news-category') }}" method="post">
-                        @csrf
-                        <label>News Category</label>
-                        <input type="text" name="newsCategory" class="form-control" /><br>
-                        <button type="submit" class="btn btn-bitbucket">Submit</button>
-                    </form>
-                </div>
-
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                </div>
-
-            </div>
-        </div>
-    </div>
 
 
     <style>
@@ -181,6 +186,11 @@
 
         }
     </style>
+
+
+
+
+
 
     @include('layouts.footer')
     <script src="{{ url('assets/js/select2.full.min.js') }}"></script>
@@ -191,11 +201,8 @@
 
         });
     </script>
-    <script>
-        var simplemde = new SimpleMDE({
-            element: document.getElementById("MyID")
-        });
-    </script>
+
 </body>
+
 
 </html>

@@ -27,6 +27,7 @@ Route::post('login',[AuthController::class,'login']);
 Route::group(['middleware'=>'auth'],function(){
     Route::get('home',[DashboardController::class,'index']);
     Route::get('news/add',[NewsController::class,'addNews']);
+    Route::post('news/add', [NewsController::class, 'store']);
     Route::post('news/news-category',[NewsCategoryController::class,'store']);
 
 });
