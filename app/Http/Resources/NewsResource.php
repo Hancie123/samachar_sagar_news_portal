@@ -23,6 +23,7 @@ class NewsResource extends JsonResource
             'excerpt'=>$this->excerpt,
             'description'=>$this->description,
             'status'=>$this->status,
+            'news_image'=>$this->getFirstMediaUrl('news_image'),
             'created_at'=>$this->created_at,
 
         ];

@@ -59,7 +59,7 @@
                 </div><br>
 
 
-                <form action="{{url('news/add')}}" method="post">
+                <form action="{{url('news/add')}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="card">
 
@@ -92,7 +92,7 @@
                             <div class="col-md-12">
                                 <label for="email" class="form-label">Image:</label>
                                 <input type="file" class="form-control" id="email" placeholder="Enter email"
-                                    name="email">
+                                    name="news_image">
 
                             </div>
 
