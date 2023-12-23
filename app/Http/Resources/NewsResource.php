@@ -24,7 +24,7 @@ class NewsResource extends JsonResource
             'description'=>$this->description,
             'status'=>$this->status,
             'news_image'=>$this->getFirstMediaUrl('news_image'),
-            'created_at'=>$this->created_at,
+            'created_at'=>$this->created_at->diffForHumans(),
 
         ];
 
